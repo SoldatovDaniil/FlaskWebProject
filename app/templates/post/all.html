@@ -1,0 +1,51 @@
+{% extends 'main/base.html' %}
+
+{% block title %}All{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blocks/table.css') }}">
+{% endblock %}
+
+
+{% block content %}
+
+<form method="post" class="form-control d-flex flex-row gap-2", id="teacherForm">
+    {{ form.csrf_token }}
+    {{ form.teacher }}
+    <input type="submit" class="btn btn-success" value="show">
+</form>
+
+<div class="table-responsive custom-table-responsive">
+    <table class="table custom-table">
+        <thead>
+            <tr>
+                <th scope="col">Teacher</th>
+                <th scope="col">Subject</th>
+                <th scope="col">Student</th>
+                {% if current_user.is_authenticated %}
+                <th scope="col">Action</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+            <tr scope="row">
+                <td>{{ post.author.name }}</td>
+                <td>{{ post.subject }}</td>
+                <td>
+                    {% with student = user.find_by_id(post.student)%}
+                        {{student.name}}
+                    {% endwith %}
+                </td>
+                <td>
+                {% if current_user.is_authenticated and post.author.id == current_user.id%}
+                    <a href="{{ url_for('post.update', id=post.id)}}" class="btn btn-sm btn-secondary">edit</a>
+                    <a href="{{ url_for('post.delete', id=post.id)}}" class="btn btn-sm btn-danger">delete</a>
+                {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

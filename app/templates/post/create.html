@@ -1,0 +1,11 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Add smth in db{% endblock %}
+
+{% block content %}
+<form method="post" class="form-control d-flex flex-column gap-2">
+    <input name="subject" type="text" placeholder="subject" class="form-control">
+    {{ form.student(class="form-control") }}
+    <input value="add" type="submit" class="btn btn-success">
+</form>
+{% endblock %}

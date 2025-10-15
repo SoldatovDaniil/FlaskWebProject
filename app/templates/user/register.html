@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Sign up{% endblock %}
+
+{% block content %}
+    <form method="post" enctype="multipart/form-data" class="form-control d-flex flex-column gap-2">
+        {{ form.csrf_token }}
+        {{ form.name(class="form-control", placeholder="name")}}
+        {{ form.login(class="form-control", placeholder="login") }}
+        {{ form.status.label }}
+        {{ form.status(class="form-control") }}
+        {% if form.login.errors %}
+            <div class="invalid-feedback" style="display: block!important;">
+                {% for error in form.login.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {{ form.password(class="form-control", placeholder="password") }}
+        {{ form.confirmPassword(class="form-control", placeholder="confirm password") }}
+        {{ form.submit }}
+    </form>
+{% endblock %}
+
+
